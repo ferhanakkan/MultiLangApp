@@ -1,0 +1,6 @@
+framework module Pods_MultiLanguageApp {
+  umbrella header "Pods-MultiLanguageApp-umbrella.h"
+
+  export *
+  module * { export * }
+}

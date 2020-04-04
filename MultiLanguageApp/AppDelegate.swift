@@ -7,14 +7,38 @@
 //
 
 import UIKit
+import Localize
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        Localize.shared.update(provider: .json)
+        Localize.shared.update(fileName: "language")
+        Localize.shared.update(defaultLanguage: "en")
+        
+        let userDefaults = UserDefaults.standard
+        let lang = Locale.preferredLanguages[0]
+        
+        if userDefaults.value(forKey: "lang") == nil {
+            switch lang{
+            case "en-TR":
+                Localize.update(language: "en")
+                userDefaults.set("en", forKey: "lang")
+            case "tr-TR":
+                Localize.update(language: "tr")
+                userDefaults.set("tr", forKey: "lang")
+            default:
+                Localize.update(language: "en")
+                userDefaults.set("en", forKey: "lang")
+            }
+            userDefaults.synchronize()
+        }
+
         return true
     }
 
